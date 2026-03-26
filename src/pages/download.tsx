@@ -237,19 +237,19 @@ const DownloadButtons = ({ artifacts }: { artifacts: ArtifactsMap }) => {
             />
             <DownloadInfo
                 name="Fabric"
-                comment="MC 1.21.11"
+                comment="MC 26.1"
                 url={getUrl('fabric')}
                 logo={fabricLogo}
             />
             <DownloadInfo
                 name="NeoForge"
-                comment="MC 1.21.11"
+                comment="MC 26.1"
                 url={getUrl('neoforge')}
                 logo={neoForgeLogo}
             />
             <DownloadInfo
                 name="Forge"
-                comment="MC 1.21.11"
+                comment="MC 26.1"
                 url={getUrl('forge')}
                 logo={forgeLogo}
             />
