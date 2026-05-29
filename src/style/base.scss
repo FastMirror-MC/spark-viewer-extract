@@ -1,6 +1,26 @@
 @use 'node_modules/@fortawesome/fontawesome-svg-core/styles';
 @use './theme.scss';
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&display=swap');
+@font-face {
+    font-family: 'JetBrains Mono';
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+    src: url('/assets/fonts/JetBrainsMono-Light.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'JetBrains Mono';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('/assets/fonts/JetBrainsMono-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'JetBrains Mono';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('/assets/fonts/JetBrainsMono-Bold.ttf') format('truetype');
+}
 
 html {
     background-color: var(--bg-primary);

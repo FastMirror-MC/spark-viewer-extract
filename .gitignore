@@ -18,6 +18,9 @@
 # misc
 .DS_Store
 .env.local
+
+# build artifacts
+spark-viewer.zip
 .env.development.local
 .env.test.local
 .env.production.local
