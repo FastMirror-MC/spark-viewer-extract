@@ -1,0 +1,109 @@
+import { Dispatch, SetStateAction } from 'react';
+import styles from '../../../../style/controls.module.scss';
+import ExportButton from '../../../common/components/controls/ExportButton';
+import ShowInfoButton from '../../../common/components/controls/ShowInfoButton';
+import { MetadataToggle } from '../../../common/hooks/useMetadataToggle';
+import { ExportCallback } from '../../../common/logic/export';
+import { SamplerMetadata } from '../../../proto/spark_pb';
+import { SearchQuery } from '../../hooks/useSearchQuery';
+import { SocketBinding } from '../../hooks/useSocketBindings';
+import { MappingsResolver } from '../../mappings/resolver';
+import VirtualNode from '../../node/VirtualNode';
+import SamplerData from '../../SamplerData';
+import SamplerTitle from '../SamplerTitle';
+import { View } from '../views/types';
+import AnalysisExportButton from './AnalysisExportButton';
+import ExitFlameButton from './ExitFlameButton';
+import FlameButton from './FlameButton';
+import GraphButton from './GraphButton';
+import LastUpdateSpinner from './LastUpdateSpinner';
+import SearchBar from './SearchBar';
+import SettingsButton from './SettingsButton';
+import ToggleViewButton from './ToggleViewButton';
+
+export interface ControlsProps {
+    data: SamplerData;
+    metadata: SamplerMetadata;
+    metadataToggle: MetadataToggle;
+    exportCallback: ExportCallback;
+    showSettings: boolean;
+    setShowSettings: Dispatch<SetStateAction<boolean>>;
+    view: View;
+    setView: Dispatch<SetStateAction<View>>;
+    sourcesViewSupported: boolean;
+    graphSupported: boolean;
+    showGraph: boolean;
+    setShowGraph: Dispatch<SetStateAction<boolean>>;
+    socket: SocketBinding;
+    showSocketInfo: boolean;
+    setShowSocketInfo: Dispatch<SetStateAction<boolean>>;
+    flameData?: VirtualNode;
+    setFlameData: Dispatch<SetStateAction<VirtualNode | undefined>>;
+    searchQuery: SearchQuery;
+    mappingsResolver?: MappingsResolver;
+}
+
+export default function Controls({
+    data,
+    metadata,
+    metadataToggle,
+    exportCallback,
+    showSettings,
+    setShowSettings,
+    view,
+    setView,
+    sourcesViewSupported,
+    graphSupported,
+    showGraph,
+    setShowGraph,
+    socket,
+    showSocketInfo,
+    setShowSocketInfo,
+    flameData,
+    setFlameData,
+    searchQuery,
+    mappingsResolver,
+}: ControlsProps) {
+    return (
+        <div className={styles.controls}>
+            <SamplerTitle metadata={metadata} />
+            <ShowInfoButton
+                metadata={metadata}
+                metadataToggle={metadataToggle}
+            />
+            <GraphButton
+                graphSupported={graphSupported}
+                showGraph={showGraph}
+                setShowGraph={setShowGraph}
+            />
+            <SettingsButton
+                showSettings={showSettings}
+                setShowSettings={setShowSettings}
+            />
+            {!flameData ? (
+                <>
+                    <ToggleViewButton
+                        metadata={metadata}
+                        view={view}
+                        setView={setView}
+                        sourcesViewSupported={sourcesViewSupported}
+                    />
+                    <FlameButton data={data} setFlameData={setFlameData} />
+                    <AnalysisExportButton
+                        data={data}
+                        exportOriginal={exportCallback}
+                        mappingsResolver={mappingsResolver}
+                    />
+                    <SearchBar searchQuery={searchQuery} />
+                </>
+            ) : (
+                <ExitFlameButton setFlameData={setFlameData} />
+            )}
+            <LastUpdateSpinner
+                socket={socket}
+                showSocketInfo={showSocketInfo}
+                setShowSocketInfo={setShowSocketInfo}
+            />
+        </div>
+    );
+}

@@ -1,0 +1,3 @@
+# Netlify / Cloudflare Pages SPA fallback
+# Any unmatched route serves [code].html so the client can parse the path
+/*  /[code].html  200

@@ -1,0 +1,102 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    background: var(--bg-header);
+    color: var(--text-tertiary);
+    padding: 5px 20px;
+    margin: 0;
+    font-weight: normal;
+    box-shadow: 0 0 4px var(--shadow-color);
+    z-index: 20;
+    line-height: 100%;
+
+    > a {
+        display: flex;
+        align-items: center;
+        background-color: var(--bg-secondary);
+        border-radius: 5px;
+        padding: 3px 5px 3px 3px;
+        margin: 3px 0;
+        border: 0;
+
+        > h1 {
+            padding: 0 3px;
+            font-size: 14pt;
+            margin: 0;
+            font-weight: normal;
+            color: var(--text-white);
+        }
+    }
+
+    svg {
+        filter: invert(0%);
+        padding-right: 5px;
+    }
+}
+
+.homepage-header {
+    background: var(--bg-header);
+    display: flex;
+    justify-content: center;
+
+    > div:first-child {
+        display: flex;
+        justify-content: space-around;
+        flex-grow: 1;
+        max-width: 900px;
+        padding: 50px 0;
+
+        > svg {
+            width: 25%;
+            filter: drop-shadow(0 8px 16px rgba(0, 0, 0, .3));
+        }
+
+        > div {
+            width: 60%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+
+            > h1 {
+                font-size: min(15vw, 150px);
+                line-height: 1em;
+                margin: 0 0 15px;
+                background: linear-gradient(135deg, var(--accent-yellow) 0, var(--accent-primary) 100%);
+                background-clip: text;
+                -webkit-text-fill-color: rgba(0, 0, 0, 0);
+            }
+
+            > div {
+                font-size: min(2vw, 20px);
+                line-height: 1.1;
+            }
+        }
+    }
+
+    .homepage-header-controls {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
+}
+
+.theme-toggle {
+    background: none;
+    border-radius: 5px;
+    padding: 4px 8px;
+    color: var(--text-tertiary);
+    transition: background-color 0.2s;
+
+    &:hover {
+        background-color: var(--bg-tertiary);
+    }
+
+    svg {
+        padding-right: 0;
+        width: 18px;
+        height: 18px;
+    }
+}
