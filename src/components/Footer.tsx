@@ -11,6 +11,11 @@ export default function Footer() {
             Copyright &copy; 2018-{year}{' '}
             <a href="https://github.com/lucko">lucko</a> &amp; other spark{' '}
             <a href="docs/misc/Credits">contributors</a>.
+            <br />
+            <a href="https://github.com/FastMirror-MC/spark-viewer-extract">
+                FastMirror-MC/spark-viewer-extract
+            </a>
+            : Web frontend for spark with JSON export.
         </footer>
     );
 }
