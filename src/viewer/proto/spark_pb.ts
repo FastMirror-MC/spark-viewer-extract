@@ -323,17 +323,29 @@ export interface PlatformStatistics {
  */
 export interface PlatformStatistics_Memory {
     /**
-     * @generated from protobuf field: spark.PlatformStatistics.Memory.MemoryUsage heap = 1;
+     * @generated from protobuf field: spark.MemoryUsage heap = 1;
      */
-    heap?: PlatformStatistics_Memory_MemoryUsage;
+    heap?: MemoryUsage;
     /**
-     * @generated from protobuf field: spark.PlatformStatistics.Memory.MemoryUsage nonHeap = 2;
+     * @generated from protobuf field: spark.MemoryUsage nonHeap = 2;
      */
-    nonHeap?: PlatformStatistics_Memory_MemoryUsage;
+    nonHeap?: MemoryUsage;
     /**
      * @generated from protobuf field: repeated spark.PlatformStatistics.Memory.MemoryPool pools = 3;
      */
     pools: PlatformStatistics_Memory_MemoryPool[];
+    /**
+     * @generated from protobuf field: spark.RollingAverageValues allocBpsLast1m = 4 [json_name = "allocBpsLast1m"];
+     */
+    allocBpsLast1M?: RollingAverageValues;
+    /**
+     * @generated from protobuf field: spark.RollingAverageValues allocBpsLast5m = 5 [json_name = "allocBpsLast5m"];
+     */
+    allocBpsLast5M?: RollingAverageValues;
+    /**
+     * @generated from protobuf field: spark.RollingAverageValues allocBpsLast15m = 6 [json_name = "allocBpsLast15m"];
+     */
+    allocBpsLast15M?: RollingAverageValues;
 }
 /**
  * @generated from protobuf message spark.PlatformStatistics.Memory.MemoryPool
@@ -344,34 +356,13 @@ export interface PlatformStatistics_Memory_MemoryPool {
      */
     name: string;
     /**
-     * @generated from protobuf field: spark.PlatformStatistics.Memory.MemoryUsage usage = 2;
+     * @generated from protobuf field: spark.MemoryUsage usage = 2;
      */
-    usage?: PlatformStatistics_Memory_MemoryUsage;
+    usage?: MemoryUsage;
     /**
-     * @generated from protobuf field: spark.PlatformStatistics.Memory.MemoryUsage collectionUsage = 3;
+     * @generated from protobuf field: spark.MemoryUsage collectionUsage = 3;
      */
-    collectionUsage?: PlatformStatistics_Memory_MemoryUsage;
-}
-/**
- * @generated from protobuf message spark.PlatformStatistics.Memory.MemoryUsage
- */
-export interface PlatformStatistics_Memory_MemoryUsage {
-    /**
-     * @generated from protobuf field: int64 used = 1;
-     */
-    used: number;
-    /**
-     * @generated from protobuf field: int64 committed = 2;
-     */
-    committed: number;
-    /**
-     * @generated from protobuf field: int64 init = 3;
-     */
-    init: number; // optional
-    /**
-     * @generated from protobuf field: int64 max = 4;
-     */
-    max: number; // optional
+    collectionUsage?: MemoryUsage;
 }
 /**
  * @generated from protobuf message spark.PlatformStatistics.Gc
@@ -539,6 +530,157 @@ export interface RollingAverageValues {
      * @generated from protobuf field: double percentile95 = 5;
      */
     percentile95: number;
+}
+/**
+ * @generated from protobuf message spark.MemoryUsage
+ */
+export interface MemoryUsage {
+    /**
+     * @generated from protobuf field: int64 used = 1;
+     */
+    used: number;
+    /**
+     * @generated from protobuf field: int64 committed = 2;
+     */
+    committed: number;
+    /**
+     * @generated from protobuf field: int64 init = 3;
+     */
+    init: number;
+    /**
+     * @generated from protobuf field: int64 max = 4;
+     */
+    max: number;
+}
+/**
+ * @generated from protobuf message spark.DoubleMetricSeries
+ */
+export interface DoubleMetricSeries {
+    /**
+     * @generated from protobuf field: int64 startTimestampMs = 1;
+     */
+    startTimestampMs: number;
+    /**
+     * @generated from protobuf field: repeated uint32 timestampDeltasMs = 2;
+     */
+    timestampDeltasMs: number[];
+    /**
+     * @generated from protobuf field: repeated double values = 3;
+     */
+    values: number[];
+}
+/**
+ * @generated from protobuf message spark.AveragesMetricSeries
+ */
+export interface AveragesMetricSeries {
+    /**
+     * @generated from protobuf field: int64 startTimestampMs = 1;
+     */
+    startTimestampMs: number;
+    /**
+     * @generated from protobuf field: repeated uint32 timestampDeltasMs = 2;
+     */
+    timestampDeltasMs: number[];
+    /**
+     * @generated from protobuf field: repeated spark.RollingAverageValues values = 3;
+     */
+    values: RollingAverageValues[];
+}
+/**
+ * @generated from protobuf message spark.MemoryUsageMetricSeries
+ */
+export interface MemoryUsageMetricSeries {
+    /**
+     * @generated from protobuf field: int64 startTimestampMs = 1;
+     */
+    startTimestampMs: number;
+    /**
+     * @generated from protobuf field: repeated uint32 timestampDeltasMs = 2;
+     */
+    timestampDeltasMs: number[];
+    /**
+     * @generated from protobuf field: repeated spark.MemoryUsage values = 3;
+     */
+    values: MemoryUsage[];
+}
+/**
+ * @generated from protobuf message spark.WorldInfoMetricSeries
+ */
+export interface WorldInfoMetricSeries {
+    /**
+     * @generated from protobuf field: int64 startTimestampMs = 1;
+     */
+    startTimestampMs: number;
+    /**
+     * @generated from protobuf field: repeated uint32 timestampDeltasMs = 2;
+     */
+    timestampDeltasMs: number[];
+    /**
+     * @generated from protobuf field: repeated spark.WorldInfoMetricSeries.Values values = 3;
+     */
+    values: WorldInfoMetricSeries_Values[];
+}
+/**
+ * @generated from protobuf message spark.WorldInfoMetricSeries.Values
+ */
+export interface WorldInfoMetricSeries_Values {
+    /**
+     * @generated from protobuf field: int32 players = 1;
+     */
+    players: number;
+    /**
+     * @generated from protobuf field: int32 entities = 2;
+     */
+    entities: number;
+    /**
+     * @generated from protobuf field: int32 tileEntities = 3;
+     */
+    tileEntities: number;
+    /**
+     * @generated from protobuf field: int32 chunks = 4;
+     */
+    chunks: number;
+}
+/**
+ * @generated from protobuf message spark.Metrics
+ */
+export interface Metrics {
+    /**
+     * @generated from protobuf field: spark.DoubleMetricSeries tps = 1;
+     */
+    tps?: DoubleMetricSeries;
+    /**
+     * @generated from protobuf field: spark.AveragesMetricSeries tickDuration = 2;
+     */
+    tickDuration?: AveragesMetricSeries;
+    /**
+     * @generated from protobuf field: spark.DoubleMetricSeries cpuUsageProcess = 3;
+     */
+    cpuUsageProcess?: DoubleMetricSeries;
+    /**
+     * @generated from protobuf field: spark.DoubleMetricSeries cpuUsageSystem = 4;
+     */
+    cpuUsageSystem?: DoubleMetricSeries;
+    /**
+     * @generated from protobuf field: spark.MemoryUsageMetricSeries memoryUsageHeap = 5;
+     */
+    memoryUsageHeap?: MemoryUsageMetricSeries;
+    /**
+     * @generated from protobuf field: spark.MemoryUsageMetricSeries memoryUsageNonHeap = 6;
+     */
+    memoryUsageNonHeap?: MemoryUsageMetricSeries;
+    /**
+     * @generated from protobuf field: spark.DoubleMetricSeries memoryAllocation = 7;
+     */
+    memoryAllocation?: DoubleMetricSeries;
+    /**
+     * @generated from protobuf field: spark.WorldInfoMetricSeries worldInfo = 8;
+     */
+    worldInfo?: WorldInfoMetricSeries;
+    /**
+     * @generated from protobuf field: spark.AveragesMetricSeries playerPing = 9;
+     */
+    playerPing?: AveragesMetricSeries;
 }
 /**
  * @generated from protobuf message spark.WorldStatistics
@@ -729,6 +871,10 @@ export interface HealthData {
     timeWindowStatistics: {
         [key: number]: WindowStatistics;
     };
+    /**
+     * @generated from protobuf field: spark.SocketChannelInfo channelInfo = 3;
+     */
+    channelInfo?: SocketChannelInfo; // optional
 }
 /**
  * @generated from protobuf message spark.HealthDataLite
@@ -781,6 +927,23 @@ export interface HealthMetadata {
     extraPlatformMetadata: {
         [key: string]: string;
     };
+    /**
+     * @generated from protobuf field: spark.Metrics metrics = 9;
+     */
+    metrics?: Metrics;
+}
+/**
+ * @generated from protobuf message spark.SocketChannelInfo
+ */
+export interface SocketChannelInfo {
+    /**
+     * @generated from protobuf field: string channelId = 1;
+     */
+    channelId: string;
+    /**
+     * @generated from protobuf field: bytes publicKey = 2;
+     */
+    publicKey: Uint8Array;
 }
 // -----------------------------------------------------------------------------------------------------
 // spark_heap
@@ -850,6 +1013,10 @@ export interface HeapMetadata {
     extraPlatformMetadata: {
         [key: string]: string;
     };
+    /**
+     * @generated from protobuf field: spark.Metrics metrics = 9;
+     */
+    metrics?: Metrics;
 }
 /**
  * @generated from protobuf message spark.HeapEntry
@@ -1004,6 +1171,14 @@ export interface SamplerMetadata {
      * @generated from protobuf field: spark.SamplerMetadata.SamplerEngine samplerEngine = 16;
      */
     samplerEngine: SamplerMetadata_SamplerEngine;
+    /**
+     * @generated from protobuf field: string samplerEngineVersion = 17;
+     */
+    samplerEngineVersion: string;
+    /**
+     * @generated from protobuf field: spark.Metrics metrics = 18;
+     */
+    metrics?: Metrics;
 }
 /**
  * @generated from protobuf message spark.SamplerMetadata.ThreadDumper
@@ -1101,7 +1276,11 @@ export enum SamplerMetadata_SamplerMode {
     /**
      * @generated from protobuf enum value: ALLOCATION = 1;
      */
-    ALLOCATION = 1
+    ALLOCATION = 1,
+    /**
+     * @generated from protobuf enum value: LOCK = 2;
+     */
+    LOCK = 2
 }
 /**
  * @generated from protobuf enum spark.SamplerMetadata.SamplerEngine
@@ -1181,19 +1360,6 @@ export interface StackTraceNode {
      * @generated from protobuf field: repeated int32 childrenRefs = 9;
      */
     childrenRefs: number[];
-}
-/**
- * @generated from protobuf message spark.SocketChannelInfo
- */
-export interface SocketChannelInfo {
-    /**
-     * @generated from protobuf field: string channelId = 1;
-     */
-    channelId: string;
-    /**
-     * @generated from protobuf field: bytes publicKey = 2;
-     */
-    publicKey: Uint8Array;
 }
 // -----------------------------------------------------------------------------------------------------
 // spark_ws
@@ -1364,6 +1530,10 @@ export interface ServerUpdateStatistics {
      * @generated from protobuf field: spark.SystemStatistics system = 2;
      */
     system?: SystemStatistics;
+    /**
+     * @generated from protobuf field: spark.Metrics metrics = 3;
+     */
+    metrics?: Metrics;
 }
 /**
  * (unsigned) Sent from the client -> server on initial connection
@@ -2469,9 +2639,12 @@ export const PlatformStatistics = new PlatformStatistics$Type();
 class PlatformStatistics_Memory$Type extends MessageType<PlatformStatistics_Memory> {
     constructor() {
         super("spark.PlatformStatistics.Memory", [
-            { no: 1, name: "heap", kind: "message", T: () => PlatformStatistics_Memory_MemoryUsage },
-            { no: 2, name: "nonHeap", kind: "message", T: () => PlatformStatistics_Memory_MemoryUsage },
-            { no: 3, name: "pools", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PlatformStatistics_Memory_MemoryPool }
+            { no: 1, name: "heap", kind: "message", T: () => MemoryUsage },
+            { no: 2, name: "nonHeap", kind: "message", T: () => MemoryUsage },
+            { no: 3, name: "pools", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PlatformStatistics_Memory_MemoryPool },
+            { no: 4, name: "allocBpsLast1m", kind: "message", jsonName: "allocBpsLast1m", T: () => RollingAverageValues },
+            { no: 5, name: "allocBpsLast5m", kind: "message", jsonName: "allocBpsLast5m", T: () => RollingAverageValues },
+            { no: 6, name: "allocBpsLast15m", kind: "message", jsonName: "allocBpsLast15m", T: () => RollingAverageValues }
         ]);
     }
     create(value?: PartialMessage<PlatformStatistics_Memory>): PlatformStatistics_Memory {
@@ -2486,14 +2659,23 @@ class PlatformStatistics_Memory$Type extends MessageType<PlatformStatistics_Memo
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* spark.PlatformStatistics.Memory.MemoryUsage heap */ 1:
-                    message.heap = PlatformStatistics_Memory_MemoryUsage.internalBinaryRead(reader, reader.uint32(), options, message.heap);
+                case /* spark.MemoryUsage heap */ 1:
+                    message.heap = MemoryUsage.internalBinaryRead(reader, reader.uint32(), options, message.heap);
                     break;
-                case /* spark.PlatformStatistics.Memory.MemoryUsage nonHeap */ 2:
-                    message.nonHeap = PlatformStatistics_Memory_MemoryUsage.internalBinaryRead(reader, reader.uint32(), options, message.nonHeap);
+                case /* spark.MemoryUsage nonHeap */ 2:
+                    message.nonHeap = MemoryUsage.internalBinaryRead(reader, reader.uint32(), options, message.nonHeap);
                     break;
                 case /* repeated spark.PlatformStatistics.Memory.MemoryPool pools */ 3:
                     message.pools.push(PlatformStatistics_Memory_MemoryPool.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* spark.RollingAverageValues allocBpsLast1m = 4 [json_name = "allocBpsLast1m"];*/ 4:
+                    message.allocBpsLast1M = RollingAverageValues.internalBinaryRead(reader, reader.uint32(), options, message.allocBpsLast1M);
+                    break;
+                case /* spark.RollingAverageValues allocBpsLast5m = 5 [json_name = "allocBpsLast5m"];*/ 5:
+                    message.allocBpsLast5M = RollingAverageValues.internalBinaryRead(reader, reader.uint32(), options, message.allocBpsLast5M);
+                    break;
+                case /* spark.RollingAverageValues allocBpsLast15m = 6 [json_name = "allocBpsLast15m"];*/ 6:
+                    message.allocBpsLast15M = RollingAverageValues.internalBinaryRead(reader, reader.uint32(), options, message.allocBpsLast15M);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2507,15 +2689,24 @@ class PlatformStatistics_Memory$Type extends MessageType<PlatformStatistics_Memo
         return message;
     }
     internalBinaryWrite(message: PlatformStatistics_Memory, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* spark.PlatformStatistics.Memory.MemoryUsage heap = 1; */
+        /* spark.MemoryUsage heap = 1; */
         if (message.heap)
-            PlatformStatistics_Memory_MemoryUsage.internalBinaryWrite(message.heap, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* spark.PlatformStatistics.Memory.MemoryUsage nonHeap = 2; */
+            MemoryUsage.internalBinaryWrite(message.heap, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* spark.MemoryUsage nonHeap = 2; */
         if (message.nonHeap)
-            PlatformStatistics_Memory_MemoryUsage.internalBinaryWrite(message.nonHeap, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+            MemoryUsage.internalBinaryWrite(message.nonHeap, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         /* repeated spark.PlatformStatistics.Memory.MemoryPool pools = 3; */
         for (let i = 0; i < message.pools.length; i++)
             PlatformStatistics_Memory_MemoryPool.internalBinaryWrite(message.pools[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* spark.RollingAverageValues allocBpsLast1m = 4 [json_name = "allocBpsLast1m"]; */
+        if (message.allocBpsLast1M)
+            RollingAverageValues.internalBinaryWrite(message.allocBpsLast1M, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* spark.RollingAverageValues allocBpsLast5m = 5 [json_name = "allocBpsLast5m"]; */
+        if (message.allocBpsLast5M)
+            RollingAverageValues.internalBinaryWrite(message.allocBpsLast5M, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        /* spark.RollingAverageValues allocBpsLast15m = 6 [json_name = "allocBpsLast15m"]; */
+        if (message.allocBpsLast15M)
+            RollingAverageValues.internalBinaryWrite(message.allocBpsLast15M, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2531,8 +2722,8 @@ class PlatformStatistics_Memory_MemoryPool$Type extends MessageType<PlatformStat
     constructor() {
         super("spark.PlatformStatistics.Memory.MemoryPool", [
             { no: 1, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "usage", kind: "message", T: () => PlatformStatistics_Memory_MemoryUsage },
-            { no: 3, name: "collectionUsage", kind: "message", T: () => PlatformStatistics_Memory_MemoryUsage }
+            { no: 2, name: "usage", kind: "message", T: () => MemoryUsage },
+            { no: 3, name: "collectionUsage", kind: "message", T: () => MemoryUsage }
         ]);
     }
     create(value?: PartialMessage<PlatformStatistics_Memory_MemoryPool>): PlatformStatistics_Memory_MemoryPool {
@@ -2550,11 +2741,11 @@ class PlatformStatistics_Memory_MemoryPool$Type extends MessageType<PlatformStat
                 case /* string name */ 1:
                     message.name = reader.string();
                     break;
-                case /* spark.PlatformStatistics.Memory.MemoryUsage usage */ 2:
-                    message.usage = PlatformStatistics_Memory_MemoryUsage.internalBinaryRead(reader, reader.uint32(), options, message.usage);
+                case /* spark.MemoryUsage usage */ 2:
+                    message.usage = MemoryUsage.internalBinaryRead(reader, reader.uint32(), options, message.usage);
                     break;
-                case /* spark.PlatformStatistics.Memory.MemoryUsage collectionUsage */ 3:
-                    message.collectionUsage = PlatformStatistics_Memory_MemoryUsage.internalBinaryRead(reader, reader.uint32(), options, message.collectionUsage);
+                case /* spark.MemoryUsage collectionUsage */ 3:
+                    message.collectionUsage = MemoryUsage.internalBinaryRead(reader, reader.uint32(), options, message.collectionUsage);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2571,12 +2762,12 @@ class PlatformStatistics_Memory_MemoryPool$Type extends MessageType<PlatformStat
         /* string name = 1; */
         if (message.name !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.name);
-        /* spark.PlatformStatistics.Memory.MemoryUsage usage = 2; */
+        /* spark.MemoryUsage usage = 2; */
         if (message.usage)
-            PlatformStatistics_Memory_MemoryUsage.internalBinaryWrite(message.usage, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* spark.PlatformStatistics.Memory.MemoryUsage collectionUsage = 3; */
+            MemoryUsage.internalBinaryWrite(message.usage, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* spark.MemoryUsage collectionUsage = 3; */
         if (message.collectionUsage)
-            PlatformStatistics_Memory_MemoryUsage.internalBinaryWrite(message.collectionUsage, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+            MemoryUsage.internalBinaryWrite(message.collectionUsage, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2587,77 +2778,6 @@ class PlatformStatistics_Memory_MemoryPool$Type extends MessageType<PlatformStat
  * @generated MessageType for protobuf message spark.PlatformStatistics.Memory.MemoryPool
  */
 export const PlatformStatistics_Memory_MemoryPool = new PlatformStatistics_Memory_MemoryPool$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class PlatformStatistics_Memory_MemoryUsage$Type extends MessageType<PlatformStatistics_Memory_MemoryUsage> {
-    constructor() {
-        super("spark.PlatformStatistics.Memory.MemoryUsage", [
-            { no: 1, name: "used", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 2, name: "committed", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 3, name: "init", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 4, name: "max", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
-        ]);
-    }
-    create(value?: PartialMessage<PlatformStatistics_Memory_MemoryUsage>): PlatformStatistics_Memory_MemoryUsage {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.used = 0;
-        message.committed = 0;
-        message.init = 0;
-        message.max = 0;
-        if (value !== undefined)
-            reflectionMergePartial<PlatformStatistics_Memory_MemoryUsage>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PlatformStatistics_Memory_MemoryUsage): PlatformStatistics_Memory_MemoryUsage {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* int64 used */ 1:
-                    message.used = reader.int64().toNumber();
-                    break;
-                case /* int64 committed */ 2:
-                    message.committed = reader.int64().toNumber();
-                    break;
-                case /* int64 init */ 3:
-                    message.init = reader.int64().toNumber();
-                    break;
-                case /* int64 max */ 4:
-                    message.max = reader.int64().toNumber();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: PlatformStatistics_Memory_MemoryUsage, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* int64 used = 1; */
-        if (message.used !== 0)
-            writer.tag(1, WireType.Varint).int64(message.used);
-        /* int64 committed = 2; */
-        if (message.committed !== 0)
-            writer.tag(2, WireType.Varint).int64(message.committed);
-        /* int64 init = 3; */
-        if (message.init !== 0)
-            writer.tag(3, WireType.Varint).int64(message.init);
-        /* int64 max = 4; */
-        if (message.max !== 0)
-            writer.tag(4, WireType.Varint).int64(message.max);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message spark.PlatformStatistics.Memory.MemoryUsage
- */
-export const PlatformStatistics_Memory_MemoryUsage = new PlatformStatistics_Memory_MemoryUsage$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class PlatformStatistics_Gc$Type extends MessageType<PlatformStatistics_Gc> {
     constructor() {
@@ -3121,6 +3241,542 @@ class RollingAverageValues$Type extends MessageType<RollingAverageValues> {
  * @generated MessageType for protobuf message spark.RollingAverageValues
  */
 export const RollingAverageValues = new RollingAverageValues$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class MemoryUsage$Type extends MessageType<MemoryUsage> {
+    constructor() {
+        super("spark.MemoryUsage", [
+            { no: 1, name: "used", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "committed", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "init", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 4, name: "max", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<MemoryUsage>): MemoryUsage {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.used = 0;
+        message.committed = 0;
+        message.init = 0;
+        message.max = 0;
+        if (value !== undefined)
+            reflectionMergePartial<MemoryUsage>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: MemoryUsage): MemoryUsage {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 used */ 1:
+                    message.used = reader.int64().toNumber();
+                    break;
+                case /* int64 committed */ 2:
+                    message.committed = reader.int64().toNumber();
+                    break;
+                case /* int64 init */ 3:
+                    message.init = reader.int64().toNumber();
+                    break;
+                case /* int64 max */ 4:
+                    message.max = reader.int64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: MemoryUsage, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 used = 1; */
+        if (message.used !== 0)
+            writer.tag(1, WireType.Varint).int64(message.used);
+        /* int64 committed = 2; */
+        if (message.committed !== 0)
+            writer.tag(2, WireType.Varint).int64(message.committed);
+        /* int64 init = 3; */
+        if (message.init !== 0)
+            writer.tag(3, WireType.Varint).int64(message.init);
+        /* int64 max = 4; */
+        if (message.max !== 0)
+            writer.tag(4, WireType.Varint).int64(message.max);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message spark.MemoryUsage
+ */
+export const MemoryUsage = new MemoryUsage$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class DoubleMetricSeries$Type extends MessageType<DoubleMetricSeries> {
+    constructor() {
+        super("spark.DoubleMetricSeries", [
+            { no: 1, name: "startTimestampMs", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "timestampDeltasMs", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 13 /*ScalarType.UINT32*/ },
+            { no: 3, name: "values", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 1 /*ScalarType.DOUBLE*/ }
+        ]);
+    }
+    create(value?: PartialMessage<DoubleMetricSeries>): DoubleMetricSeries {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.startTimestampMs = 0;
+        message.timestampDeltasMs = [];
+        message.values = [];
+        if (value !== undefined)
+            reflectionMergePartial<DoubleMetricSeries>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: DoubleMetricSeries): DoubleMetricSeries {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 startTimestampMs */ 1:
+                    message.startTimestampMs = reader.int64().toNumber();
+                    break;
+                case /* repeated uint32 timestampDeltasMs */ 2:
+                    if (wireType === WireType.LengthDelimited)
+                        for (let e = reader.int32() + reader.pos; reader.pos < e;)
+                            message.timestampDeltasMs.push(reader.uint32());
+                    else
+                        message.timestampDeltasMs.push(reader.uint32());
+                    break;
+                case /* repeated double values */ 3:
+                    if (wireType === WireType.LengthDelimited)
+                        for (let e = reader.int32() + reader.pos; reader.pos < e;)
+                            message.values.push(reader.double());
+                    else
+                        message.values.push(reader.double());
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: DoubleMetricSeries, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 startTimestampMs = 1; */
+        if (message.startTimestampMs !== 0)
+            writer.tag(1, WireType.Varint).int64(message.startTimestampMs);
+        /* repeated uint32 timestampDeltasMs = 2; */
+        if (message.timestampDeltasMs.length) {
+            writer.tag(2, WireType.LengthDelimited).fork();
+            for (let i = 0; i < message.timestampDeltasMs.length; i++)
+                writer.uint32(message.timestampDeltasMs[i]);
+            writer.join();
+        }
+        /* repeated double values = 3; */
+        if (message.values.length) {
+            writer.tag(3, WireType.LengthDelimited).fork();
+            for (let i = 0; i < message.values.length; i++)
+                writer.double(message.values[i]);
+            writer.join();
+        }
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message spark.DoubleMetricSeries
+ */
+export const DoubleMetricSeries = new DoubleMetricSeries$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class AveragesMetricSeries$Type extends MessageType<AveragesMetricSeries> {
+    constructor() {
+        super("spark.AveragesMetricSeries", [
+            { no: 1, name: "startTimestampMs", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "timestampDeltasMs", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 13 /*ScalarType.UINT32*/ },
+            { no: 3, name: "values", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => RollingAverageValues }
+        ]);
+    }
+    create(value?: PartialMessage<AveragesMetricSeries>): AveragesMetricSeries {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.startTimestampMs = 0;
+        message.timestampDeltasMs = [];
+        message.values = [];
+        if (value !== undefined)
+            reflectionMergePartial<AveragesMetricSeries>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: AveragesMetricSeries): AveragesMetricSeries {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 startTimestampMs */ 1:
+                    message.startTimestampMs = reader.int64().toNumber();
+                    break;
+                case /* repeated uint32 timestampDeltasMs */ 2:
+                    if (wireType === WireType.LengthDelimited)
+                        for (let e = reader.int32() + reader.pos; reader.pos < e;)
+                            message.timestampDeltasMs.push(reader.uint32());
+                    else
+                        message.timestampDeltasMs.push(reader.uint32());
+                    break;
+                case /* repeated spark.RollingAverageValues values */ 3:
+                    message.values.push(RollingAverageValues.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: AveragesMetricSeries, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 startTimestampMs = 1; */
+        if (message.startTimestampMs !== 0)
+            writer.tag(1, WireType.Varint).int64(message.startTimestampMs);
+        /* repeated uint32 timestampDeltasMs = 2; */
+        if (message.timestampDeltasMs.length) {
+            writer.tag(2, WireType.LengthDelimited).fork();
+            for (let i = 0; i < message.timestampDeltasMs.length; i++)
+                writer.uint32(message.timestampDeltasMs[i]);
+            writer.join();
+        }
+        /* repeated spark.RollingAverageValues values = 3; */
+        for (let i = 0; i < message.values.length; i++)
+            RollingAverageValues.internalBinaryWrite(message.values[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message spark.AveragesMetricSeries
+ */
+export const AveragesMetricSeries = new AveragesMetricSeries$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class MemoryUsageMetricSeries$Type extends MessageType<MemoryUsageMetricSeries> {
+    constructor() {
+        super("spark.MemoryUsageMetricSeries", [
+            { no: 1, name: "startTimestampMs", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "timestampDeltasMs", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 13 /*ScalarType.UINT32*/ },
+            { no: 3, name: "values", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => MemoryUsage }
+        ]);
+    }
+    create(value?: PartialMessage<MemoryUsageMetricSeries>): MemoryUsageMetricSeries {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.startTimestampMs = 0;
+        message.timestampDeltasMs = [];
+        message.values = [];
+        if (value !== undefined)
+            reflectionMergePartial<MemoryUsageMetricSeries>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: MemoryUsageMetricSeries): MemoryUsageMetricSeries {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 startTimestampMs */ 1:
+                    message.startTimestampMs = reader.int64().toNumber();
+                    break;
+                case /* repeated uint32 timestampDeltasMs */ 2:
+                    if (wireType === WireType.LengthDelimited)
+                        for (let e = reader.int32() + reader.pos; reader.pos < e;)
+                            message.timestampDeltasMs.push(reader.uint32());
+                    else
+                        message.timestampDeltasMs.push(reader.uint32());
+                    break;
+                case /* repeated spark.MemoryUsage values */ 3:
+                    message.values.push(MemoryUsage.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: MemoryUsageMetricSeries, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 startTimestampMs = 1; */
+        if (message.startTimestampMs !== 0)
+            writer.tag(1, WireType.Varint).int64(message.startTimestampMs);
+        /* repeated uint32 timestampDeltasMs = 2; */
+        if (message.timestampDeltasMs.length) {
+            writer.tag(2, WireType.LengthDelimited).fork();
+            for (let i = 0; i < message.timestampDeltasMs.length; i++)
+                writer.uint32(message.timestampDeltasMs[i]);
+            writer.join();
+        }
+        /* repeated spark.MemoryUsage values = 3; */
+        for (let i = 0; i < message.values.length; i++)
+            MemoryUsage.internalBinaryWrite(message.values[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message spark.MemoryUsageMetricSeries
+ */
+export const MemoryUsageMetricSeries = new MemoryUsageMetricSeries$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class WorldInfoMetricSeries$Type extends MessageType<WorldInfoMetricSeries> {
+    constructor() {
+        super("spark.WorldInfoMetricSeries", [
+            { no: 1, name: "startTimestampMs", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "timestampDeltasMs", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 13 /*ScalarType.UINT32*/ },
+            { no: 3, name: "values", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => WorldInfoMetricSeries_Values }
+        ]);
+    }
+    create(value?: PartialMessage<WorldInfoMetricSeries>): WorldInfoMetricSeries {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.startTimestampMs = 0;
+        message.timestampDeltasMs = [];
+        message.values = [];
+        if (value !== undefined)
+            reflectionMergePartial<WorldInfoMetricSeries>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WorldInfoMetricSeries): WorldInfoMetricSeries {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 startTimestampMs */ 1:
+                    message.startTimestampMs = reader.int64().toNumber();
+                    break;
+                case /* repeated uint32 timestampDeltasMs */ 2:
+                    if (wireType === WireType.LengthDelimited)
+                        for (let e = reader.int32() + reader.pos; reader.pos < e;)
+                            message.timestampDeltasMs.push(reader.uint32());
+                    else
+                        message.timestampDeltasMs.push(reader.uint32());
+                    break;
+                case /* repeated spark.WorldInfoMetricSeries.Values values */ 3:
+                    message.values.push(WorldInfoMetricSeries_Values.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WorldInfoMetricSeries, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 startTimestampMs = 1; */
+        if (message.startTimestampMs !== 0)
+            writer.tag(1, WireType.Varint).int64(message.startTimestampMs);
+        /* repeated uint32 timestampDeltasMs = 2; */
+        if (message.timestampDeltasMs.length) {
+            writer.tag(2, WireType.LengthDelimited).fork();
+            for (let i = 0; i < message.timestampDeltasMs.length; i++)
+                writer.uint32(message.timestampDeltasMs[i]);
+            writer.join();
+        }
+        /* repeated spark.WorldInfoMetricSeries.Values values = 3; */
+        for (let i = 0; i < message.values.length; i++)
+            WorldInfoMetricSeries_Values.internalBinaryWrite(message.values[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message spark.WorldInfoMetricSeries
+ */
+export const WorldInfoMetricSeries = new WorldInfoMetricSeries$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class WorldInfoMetricSeries_Values$Type extends MessageType<WorldInfoMetricSeries_Values> {
+    constructor() {
+        super("spark.WorldInfoMetricSeries.Values", [
+            { no: 1, name: "players", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 2, name: "entities", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 3, name: "tileEntities", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 4, name: "chunks", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
+        ]);
+    }
+    create(value?: PartialMessage<WorldInfoMetricSeries_Values>): WorldInfoMetricSeries_Values {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.players = 0;
+        message.entities = 0;
+        message.tileEntities = 0;
+        message.chunks = 0;
+        if (value !== undefined)
+            reflectionMergePartial<WorldInfoMetricSeries_Values>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WorldInfoMetricSeries_Values): WorldInfoMetricSeries_Values {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int32 players */ 1:
+                    message.players = reader.int32();
+                    break;
+                case /* int32 entities */ 2:
+                    message.entities = reader.int32();
+                    break;
+                case /* int32 tileEntities */ 3:
+                    message.tileEntities = reader.int32();
+                    break;
+                case /* int32 chunks */ 4:
+                    message.chunks = reader.int32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WorldInfoMetricSeries_Values, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int32 players = 1; */
+        if (message.players !== 0)
+            writer.tag(1, WireType.Varint).int32(message.players);
+        /* int32 entities = 2; */
+        if (message.entities !== 0)
+            writer.tag(2, WireType.Varint).int32(message.entities);
+        /* int32 tileEntities = 3; */
+        if (message.tileEntities !== 0)
+            writer.tag(3, WireType.Varint).int32(message.tileEntities);
+        /* int32 chunks = 4; */
+        if (message.chunks !== 0)
+            writer.tag(4, WireType.Varint).int32(message.chunks);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message spark.WorldInfoMetricSeries.Values
+ */
+export const WorldInfoMetricSeries_Values = new WorldInfoMetricSeries_Values$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Metrics$Type extends MessageType<Metrics> {
+    constructor() {
+        super("spark.Metrics", [
+            { no: 1, name: "tps", kind: "message", T: () => DoubleMetricSeries },
+            { no: 2, name: "tickDuration", kind: "message", T: () => AveragesMetricSeries },
+            { no: 3, name: "cpuUsageProcess", kind: "message", T: () => DoubleMetricSeries },
+            { no: 4, name: "cpuUsageSystem", kind: "message", T: () => DoubleMetricSeries },
+            { no: 5, name: "memoryUsageHeap", kind: "message", T: () => MemoryUsageMetricSeries },
+            { no: 6, name: "memoryUsageNonHeap", kind: "message", T: () => MemoryUsageMetricSeries },
+            { no: 7, name: "memoryAllocation", kind: "message", T: () => DoubleMetricSeries },
+            { no: 8, name: "worldInfo", kind: "message", T: () => WorldInfoMetricSeries },
+            { no: 9, name: "playerPing", kind: "message", T: () => AveragesMetricSeries }
+        ]);
+    }
+    create(value?: PartialMessage<Metrics>): Metrics {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        if (value !== undefined)
+            reflectionMergePartial<Metrics>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: Metrics): Metrics {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* spark.DoubleMetricSeries tps */ 1:
+                    message.tps = DoubleMetricSeries.internalBinaryRead(reader, reader.uint32(), options, message.tps);
+                    break;
+                case /* spark.AveragesMetricSeries tickDuration */ 2:
+                    message.tickDuration = AveragesMetricSeries.internalBinaryRead(reader, reader.uint32(), options, message.tickDuration);
+                    break;
+                case /* spark.DoubleMetricSeries cpuUsageProcess */ 3:
+                    message.cpuUsageProcess = DoubleMetricSeries.internalBinaryRead(reader, reader.uint32(), options, message.cpuUsageProcess);
+                    break;
+                case /* spark.DoubleMetricSeries cpuUsageSystem */ 4:
+                    message.cpuUsageSystem = DoubleMetricSeries.internalBinaryRead(reader, reader.uint32(), options, message.cpuUsageSystem);
+                    break;
+                case /* spark.MemoryUsageMetricSeries memoryUsageHeap */ 5:
+                    message.memoryUsageHeap = MemoryUsageMetricSeries.internalBinaryRead(reader, reader.uint32(), options, message.memoryUsageHeap);
+                    break;
+                case /* spark.MemoryUsageMetricSeries memoryUsageNonHeap */ 6:
+                    message.memoryUsageNonHeap = MemoryUsageMetricSeries.internalBinaryRead(reader, reader.uint32(), options, message.memoryUsageNonHeap);
+                    break;
+                case /* spark.DoubleMetricSeries memoryAllocation */ 7:
+                    message.memoryAllocation = DoubleMetricSeries.internalBinaryRead(reader, reader.uint32(), options, message.memoryAllocation);
+                    break;
+                case /* spark.WorldInfoMetricSeries worldInfo */ 8:
+                    message.worldInfo = WorldInfoMetricSeries.internalBinaryRead(reader, reader.uint32(), options, message.worldInfo);
+                    break;
+                case /* spark.AveragesMetricSeries playerPing */ 9:
+                    message.playerPing = AveragesMetricSeries.internalBinaryRead(reader, reader.uint32(), options, message.playerPing);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: Metrics, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* spark.DoubleMetricSeries tps = 1; */
+        if (message.tps)
+            DoubleMetricSeries.internalBinaryWrite(message.tps, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* spark.AveragesMetricSeries tickDuration = 2; */
+        if (message.tickDuration)
+            AveragesMetricSeries.internalBinaryWrite(message.tickDuration, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* spark.DoubleMetricSeries cpuUsageProcess = 3; */
+        if (message.cpuUsageProcess)
+            DoubleMetricSeries.internalBinaryWrite(message.cpuUsageProcess, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* spark.DoubleMetricSeries cpuUsageSystem = 4; */
+        if (message.cpuUsageSystem)
+            DoubleMetricSeries.internalBinaryWrite(message.cpuUsageSystem, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* spark.MemoryUsageMetricSeries memoryUsageHeap = 5; */
+        if (message.memoryUsageHeap)
+            MemoryUsageMetricSeries.internalBinaryWrite(message.memoryUsageHeap, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        /* spark.MemoryUsageMetricSeries memoryUsageNonHeap = 6; */
+        if (message.memoryUsageNonHeap)
+            MemoryUsageMetricSeries.internalBinaryWrite(message.memoryUsageNonHeap, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+        /* spark.DoubleMetricSeries memoryAllocation = 7; */
+        if (message.memoryAllocation)
+            DoubleMetricSeries.internalBinaryWrite(message.memoryAllocation, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+        /* spark.WorldInfoMetricSeries worldInfo = 8; */
+        if (message.worldInfo)
+            WorldInfoMetricSeries.internalBinaryWrite(message.worldInfo, writer.tag(8, WireType.LengthDelimited).fork(), options).join();
+        /* spark.AveragesMetricSeries playerPing = 9; */
+        if (message.playerPing)
+            AveragesMetricSeries.internalBinaryWrite(message.playerPing, writer.tag(9, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message spark.Metrics
+ */
+export const Metrics = new Metrics$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class WorldStatistics$Type extends MessageType<WorldStatistics> {
     constructor() {
@@ -3718,7 +4374,8 @@ class HealthData$Type extends MessageType<HealthData> {
     constructor() {
         super("spark.HealthData", [
             { no: 1, name: "metadata", kind: "message", T: () => HealthMetadata },
-            { no: 2, name: "timeWindowStatistics", kind: "map", K: 5 /*ScalarType.INT32*/, V: { kind: "message", T: () => WindowStatistics } }
+            { no: 2, name: "timeWindowStatistics", kind: "map", K: 5 /*ScalarType.INT32*/, V: { kind: "message", T: () => WindowStatistics } },
+            { no: 3, name: "channelInfo", kind: "message", T: () => SocketChannelInfo }
         ]);
     }
     create(value?: PartialMessage<HealthData>): HealthData {
@@ -3738,6 +4395,9 @@ class HealthData$Type extends MessageType<HealthData> {
                     break;
                 case /* map<int32, spark.WindowStatistics> timeWindowStatistics */ 2:
                     this.binaryReadMap2(message.timeWindowStatistics, reader, options);
+                    break;
+                case /* spark.SocketChannelInfo channelInfo */ 3:
+                    message.channelInfo = SocketChannelInfo.internalBinaryRead(reader, reader.uint32(), options, message.channelInfo);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -3777,6 +4437,9 @@ class HealthData$Type extends MessageType<HealthData> {
             WindowStatistics.internalBinaryWrite(message.timeWindowStatistics[k as any], writer, options);
             writer.join().join();
         }
+        /* spark.SocketChannelInfo channelInfo = 3; */
+        if (message.channelInfo)
+            SocketChannelInfo.internalBinaryWrite(message.channelInfo, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -3844,7 +4507,8 @@ class HealthMetadata$Type extends MessageType<HealthMetadata> {
             { no: 5, name: "generatedTime", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 6, name: "serverConfigurations", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
             { no: 7, name: "sources", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => PluginOrModMetadata } },
-            { no: 8, name: "extraPlatformMetadata", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } }
+            { no: 8, name: "extraPlatformMetadata", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
+            { no: 9, name: "metrics", kind: "message", T: () => Metrics }
         ]);
     }
     create(value?: PartialMessage<HealthMetadata>): HealthMetadata {
@@ -3885,6 +4549,9 @@ class HealthMetadata$Type extends MessageType<HealthMetadata> {
                     break;
                 case /* map<string, string> extraPlatformMetadata */ 8:
                     this.binaryReadMap8(message.extraPlatformMetadata, reader, options);
+                    break;
+                case /* spark.Metrics metrics */ 9:
+                    message.metrics = Metrics.internalBinaryRead(reader, reader.uint32(), options, message.metrics);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -3974,6 +4641,9 @@ class HealthMetadata$Type extends MessageType<HealthMetadata> {
         /* map<string, string> extraPlatformMetadata = 8; */
         for (let k of globalThis.Object.keys(message.extraPlatformMetadata))
             writer.tag(8, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.extraPlatformMetadata[k]).join();
+        /* spark.Metrics metrics = 9; */
+        if (message.metrics)
+            Metrics.internalBinaryWrite(message.metrics, writer.tag(9, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -3984,6 +4654,61 @@ class HealthMetadata$Type extends MessageType<HealthMetadata> {
  * @generated MessageType for protobuf message spark.HealthMetadata
  */
 export const HealthMetadata = new HealthMetadata$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class SocketChannelInfo$Type extends MessageType<SocketChannelInfo> {
+    constructor() {
+        super("spark.SocketChannelInfo", [
+            { no: 1, name: "channelId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "publicKey", kind: "scalar", T: 12 /*ScalarType.BYTES*/ }
+        ]);
+    }
+    create(value?: PartialMessage<SocketChannelInfo>): SocketChannelInfo {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.channelId = "";
+        message.publicKey = new Uint8Array(0);
+        if (value !== undefined)
+            reflectionMergePartial<SocketChannelInfo>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SocketChannelInfo): SocketChannelInfo {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string channelId */ 1:
+                    message.channelId = reader.string();
+                    break;
+                case /* bytes publicKey */ 2:
+                    message.publicKey = reader.bytes();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: SocketChannelInfo, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string channelId = 1; */
+        if (message.channelId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.channelId);
+        /* bytes publicKey = 2; */
+        if (message.publicKey.length)
+            writer.tag(2, WireType.LengthDelimited).bytes(message.publicKey);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message spark.SocketChannelInfo
+ */
+export const SocketChannelInfo = new SocketChannelInfo$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class HeapData$Type extends MessageType<HeapData> {
     constructor() {
@@ -4095,7 +4820,8 @@ class HeapMetadata$Type extends MessageType<HeapMetadata> {
             { no: 5, name: "generatedTime", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 6, name: "serverConfigurations", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
             { no: 7, name: "sources", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => PluginOrModMetadata } },
-            { no: 8, name: "extraPlatformMetadata", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } }
+            { no: 8, name: "extraPlatformMetadata", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
+            { no: 9, name: "metrics", kind: "message", T: () => Metrics }
         ]);
     }
     create(value?: PartialMessage<HeapMetadata>): HeapMetadata {
@@ -4136,6 +4862,9 @@ class HeapMetadata$Type extends MessageType<HeapMetadata> {
                     break;
                 case /* map<string, string> extraPlatformMetadata */ 8:
                     this.binaryReadMap8(message.extraPlatformMetadata, reader, options);
+                    break;
+                case /* spark.Metrics metrics */ 9:
+                    message.metrics = Metrics.internalBinaryRead(reader, reader.uint32(), options, message.metrics);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -4225,6 +4954,9 @@ class HeapMetadata$Type extends MessageType<HeapMetadata> {
         /* map<string, string> extraPlatformMetadata = 8; */
         for (let k of globalThis.Object.keys(message.extraPlatformMetadata))
             writer.tag(8, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.extraPlatformMetadata[k]).join();
+        /* spark.Metrics metrics = 9; */
+        if (message.metrics)
+            Metrics.internalBinaryWrite(message.metrics, writer.tag(9, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -4548,7 +5280,9 @@ class SamplerMetadata$Type extends MessageType<SamplerMetadata> {
             { no: 13, name: "sources", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => PluginOrModMetadata } },
             { no: 14, name: "extraPlatformMetadata", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
             { no: 15, name: "samplerMode", kind: "enum", T: () => ["spark.SamplerMetadata.SamplerMode", SamplerMetadata_SamplerMode] },
-            { no: 16, name: "samplerEngine", kind: "enum", T: () => ["spark.SamplerMetadata.SamplerEngine", SamplerMetadata_SamplerEngine] }
+            { no: 16, name: "samplerEngine", kind: "enum", T: () => ["spark.SamplerMetadata.SamplerEngine", SamplerMetadata_SamplerEngine] },
+            { no: 17, name: "samplerEngineVersion", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 18, name: "metrics", kind: "message", T: () => Metrics }
         ]);
     }
     create(value?: PartialMessage<SamplerMetadata>): SamplerMetadata {
@@ -4563,6 +5297,7 @@ class SamplerMetadata$Type extends MessageType<SamplerMetadata> {
         message.extraPlatformMetadata = {};
         message.samplerMode = 0;
         message.samplerEngine = 0;
+        message.samplerEngineVersion = "";
         if (value !== undefined)
             reflectionMergePartial<SamplerMetadata>(this, message, value);
         return message;
@@ -4619,6 +5354,12 @@ class SamplerMetadata$Type extends MessageType<SamplerMetadata> {
                     break;
                 case /* spark.SamplerMetadata.SamplerEngine samplerEngine */ 16:
                     message.samplerEngine = reader.int32();
+                    break;
+                case /* string samplerEngineVersion */ 17:
+                    message.samplerEngineVersion = reader.string();
+                    break;
+                case /* spark.Metrics metrics */ 18:
+                    message.metrics = Metrics.internalBinaryRead(reader, reader.uint32(), options, message.metrics);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -4732,6 +5473,12 @@ class SamplerMetadata$Type extends MessageType<SamplerMetadata> {
         /* spark.SamplerMetadata.SamplerEngine samplerEngine = 16; */
         if (message.samplerEngine !== 0)
             writer.tag(16, WireType.Varint).int32(message.samplerEngine);
+        /* string samplerEngineVersion = 17; */
+        if (message.samplerEngineVersion !== "")
+            writer.tag(17, WireType.LengthDelimited).string(message.samplerEngineVersion);
+        /* spark.Metrics metrics = 18; */
+        if (message.metrics)
+            Metrics.internalBinaryWrite(message.metrics, writer.tag(18, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -5106,61 +5853,6 @@ class StackTraceNode$Type extends MessageType<StackTraceNode> {
  * @generated MessageType for protobuf message spark.StackTraceNode
  */
 export const StackTraceNode = new StackTraceNode$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class SocketChannelInfo$Type extends MessageType<SocketChannelInfo> {
-    constructor() {
-        super("spark.SocketChannelInfo", [
-            { no: 1, name: "channelId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "publicKey", kind: "scalar", T: 12 /*ScalarType.BYTES*/ }
-        ]);
-    }
-    create(value?: PartialMessage<SocketChannelInfo>): SocketChannelInfo {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.channelId = "";
-        message.publicKey = new Uint8Array(0);
-        if (value !== undefined)
-            reflectionMergePartial<SocketChannelInfo>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SocketChannelInfo): SocketChannelInfo {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string channelId */ 1:
-                    message.channelId = reader.string();
-                    break;
-                case /* bytes publicKey */ 2:
-                    message.publicKey = reader.bytes();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: SocketChannelInfo, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string channelId = 1; */
-        if (message.channelId !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.channelId);
-        /* bytes publicKey = 2; */
-        if (message.publicKey.length)
-            writer.tag(2, WireType.LengthDelimited).bytes(message.publicKey);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message spark.SocketChannelInfo
- */
-export const SocketChannelInfo = new SocketChannelInfo$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class RawPacket$Type extends MessageType<RawPacket> {
     constructor() {
@@ -5564,7 +6256,8 @@ class ServerUpdateStatistics$Type extends MessageType<ServerUpdateStatistics> {
     constructor() {
         super("spark.ServerUpdateStatistics", [
             { no: 1, name: "platform", kind: "message", T: () => PlatformStatistics },
-            { no: 2, name: "system", kind: "message", T: () => SystemStatistics }
+            { no: 2, name: "system", kind: "message", T: () => SystemStatistics },
+            { no: 3, name: "metrics", kind: "message", T: () => Metrics }
         ]);
     }
     create(value?: PartialMessage<ServerUpdateStatistics>): ServerUpdateStatistics {
@@ -5584,6 +6277,9 @@ class ServerUpdateStatistics$Type extends MessageType<ServerUpdateStatistics> {
                 case /* spark.SystemStatistics system */ 2:
                     message.system = SystemStatistics.internalBinaryRead(reader, reader.uint32(), options, message.system);
                     break;
+                case /* spark.Metrics metrics */ 3:
+                    message.metrics = Metrics.internalBinaryRead(reader, reader.uint32(), options, message.metrics);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -5602,6 +6298,9 @@ class ServerUpdateStatistics$Type extends MessageType<ServerUpdateStatistics> {
         /* spark.SystemStatistics system = 2; */
         if (message.system)
             SystemStatistics.internalBinaryWrite(message.system, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* spark.Metrics metrics = 3; */
+        if (message.metrics)
+            Metrics.internalBinaryWrite(message.metrics, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
