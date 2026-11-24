@@ -1,17 +1,21 @@
 import dynamic from 'next/dynamic';
 import { Suspense, useEffect, useState } from 'react';
 import { Item, ItemParams, Menu } from 'react-contexify';
+import 'react-contexify/dist/ReactContexify.css';
+import { Tooltip } from 'react-tooltip';
 import styles from '../../../style/sampler.module.scss';
 import VersionWarning from '../../common/components/VersionWarning';
 import WidgetsAndMetadata from '../../common/components/WidgetsAndMetadata';
 import useMetadataToggle from '../../common/hooks/useMetadataToggle';
+import useSocketClient from '../../common/hooks/useSocketClient';
 import useToggle from '../../common/hooks/useToggle';
 import { ExportCallback } from '../../common/logic/export';
 import { SamplerMetadata } from '../../proto/spark_pb';
 import useHighlight from '../hooks/useHighlight';
+import useInfoPoints from '../hooks/useInfoPoints';
+import useMappings from '../hooks/useMappings';
 import useSearchQuery from '../hooks/useSearchQuery';
 import useSocketBindings from '../hooks/useSocketBindings';
-import useSocketClient from '../hooks/useSocketClient';
 import useTimeSelector from '../hooks/useTimeSelector';
 import VirtualNode from '../node/VirtualNode';
 import SamplerData from '../SamplerData';
@@ -23,18 +27,13 @@ import Flame from './flamegraph/Flame';
 import NoData from './misc/NoData';
 import SocketInfo from './misc/SocketInfo';
 import SamplerContext from './SamplerContext';
+import SettingsMenu from './settings/SettingsMenu';
 import AllView from './views/AllView';
 import FlatView from './views/FlatView';
 import SourcesView from './views/SourcesView';
 import { View, VIEW_ALL, VIEW_FLAT } from './views/types';
 
-const Graph = dynamic(() => import('./graph/Graph'));
-
-import 'react-contexify/dist/ReactContexify.css';
-import { Tooltip } from 'react-tooltip';
-import useInfoPoints from '../hooks/useInfoPoints';
-import useMappings from '../hooks/useMappings';
-import SettingsMenu from './settings/SettingsMenu';
+const RefineGraph = dynamic(() => import('./refine/RefineGraph'));
 
 export interface SamplerProps {
     data: SamplerData;
@@ -62,31 +61,65 @@ export default function Sampler({
     const infoPoints = useInfoPoints();
     const [flameData, setFlameData] = useState<VirtualNode>();
     const [view, setView] = useState<View>(VIEW_ALL);
-    const [showGraph, setShowGraph] = useToggle('prefShowGraph', true);
+    const [showRefineGraph, setShowRefineGraph] = useToggle(
+        'prefShowGraph',
+        true
+    );
     const [showSettings, setShowSettings] = useState<boolean>(false);
     const [showSocketInfo, setShowSocketInfo] = useToggle(
         'prefShowSocket',
         false
     );
 
-    const [flatViewData, setFlatViewData] = useState<FlatViewData>();
-    const [sourcesViewData, setSourcesViewData] = useState<SourcesViewData>();
+    // views reference nodes by id so keep them tied to their data
+    // otherwise old ids gets resolved against the new node map
+    const [flatViewData, setFlatViewData] = useState<{
+        data: SamplerData;
+        viewData: FlatViewData;
+    }>();
+    const [sourcesViewData, setSourcesViewData] = useState<{
+        data: SamplerData;
+        viewData: SourcesViewData;
+    }>();
 
     // Generate flat & sources view in the background on first load
     useEffect(() => {
+        let cancelled = false;
         (async () => {
             const worker = await RemoteSamplerWorker.create(data);
 
-            if (data.sources.hasSources()) {
-                const sourcesView = await worker.generateSourcesView();
-                setSourcesViewData(sourcesView);
+            try {
+                const tasks: Promise<void>[] = [];
+
+                if (data.sources.hasSources()) {
+                    tasks.push(
+                        worker.generateSourcesView().then(viewData => {
+                            if (!cancelled) {
+                                setSourcesViewData({
+                                    data,
+                                    viewData,
+                                });
+                            }
+                        })
+                    );
+                }
+
+                tasks.push(
+                    worker.generateFlatView().then(viewData => {
+                        if (!cancelled) {
+                            setFlatViewData({ data, viewData });
+                        }
+                    })
+                );
+
+                await Promise.all(tasks);
+            } finally {
+                worker.close();
             }
-
-            const flatView = await worker.generateFlatView();
-            setFlatViewData(flatView);
-
-            worker.close();
         })();
+        return () => {
+            cancelled = true;
+        };
     }, [data]);
 
     // WebSocket
@@ -133,9 +166,9 @@ export default function Sampler({
                 view={view}
                 setView={setView}
                 sourcesViewSupported={data.sources.hasSources()}
-                graphSupported={timeSelector.supported}
-                showGraph={showGraph}
-                setShowGraph={setShowGraph}
+                refineGraphSupported={timeSelector.supported}
+                showRefineGraph={showRefineGraph}
+                setShowRefineGraph={setShowRefineGraph}
                 socket={socket}
                 showSocketInfo={showSocketInfo}
                 setShowSocketInfo={setShowSocketInfo}
@@ -168,8 +201,8 @@ export default function Sampler({
 
             {timeSelector.supported && (
                 <Suspense fallback={null}>
-                    <Graph
-                        show={showGraph}
+                    <RefineGraph
+                        show={showRefineGraph}
                         timeSelector={timeSelector}
                         windowStatistics={data.timeWindowStatistics}
                     />
@@ -199,14 +232,14 @@ export default function Sampler({
                         <AllView data={data} setLabelMode={setLabelMode} />
                     ) : view === VIEW_FLAT ? (
                         <FlatView
-                            data={data}
-                            viewData={flatViewData}
+                            data={flatViewData?.data ?? data}
+                            viewData={flatViewData?.viewData}
                             setLabelMode={setLabelMode}
                         />
                     ) : (
                         <SourcesView
-                            data={data}
-                            viewData={sourcesViewData}
+                            data={sourcesViewData?.data ?? data}
+                            viewData={sourcesViewData?.viewData}
                             setLabelMode={setLabelMode}
                         />
                     )}

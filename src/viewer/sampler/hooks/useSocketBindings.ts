@@ -1,8 +1,8 @@
 import { useCallback, useState } from 'react';
+import { SocketClientHook } from '../../common/hooks/useSocketClient';
+import useSocketListener from '../../common/hooks/useSocketListener';
+import { ListenerResult } from '../../common/ws/Listener';
 import { PlatformStatistics, SamplerMetadata } from '../../proto/spark_pb';
-import { ListenerResult } from '../ws/Listener';
-import { SocketClientHook } from './useSocketClient';
-import useSocketListener from './useSocketListener';
 
 export interface SocketBindingsProps {
     socket: SocketClientHook;
@@ -31,7 +31,8 @@ export default function useSocketBindings({
         useCallback(
             packet => {
                 if (packet.oneofKind === 'serverUpdateStatistics') {
-                    const { platform, system } = packet.serverUpdateStatistics;
+                    const { platform, system, metrics } =
+                        packet.serverUpdateStatistics;
 
                     const platformWithWorld = {
                         ...platform,
@@ -42,6 +43,7 @@ export default function useSocketBindings({
                         ...metadata,
                         platformStatistics: platformWithWorld,
                         systemStatistics: system,
+                        metrics: metrics,
                     };
                     setMetadata(newMetadata);
                     setLastStatsUpdate(Date.now());

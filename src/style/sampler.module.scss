@@ -2,6 +2,7 @@
     :global {
         .stack {
             margin-top: 20px;
+            margin-bottom: 50px;
             padding-left: 10px;
 
             ul {
@@ -97,7 +98,7 @@
                 border-radius: 3px;
                 padding: 0 6px;
                 margin: 0 5px;
-                background-color: rgba(255, 159, 67, .1);
+                background-color: rgba(255, 159, 67, 0.1);
             }
 
             .bar {

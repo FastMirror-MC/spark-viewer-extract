@@ -12,6 +12,11 @@ export default function Footer() {
             <a href="https://github.com/lucko">lucko</a> &amp; other spark{' '}
             <a href="docs/misc/Credits">contributors</a>.
             <br />
+            Usage is subject to the <a href="docs/legal/Terms">
+                terms of service
+            </a>{' '}
+            and <a href="docs/legal/Privacy">privacy policy</a>.
+            <br />
             <a href="https://github.com/FastMirror-MC/spark-viewer-extract">
                 FastMirror-MC/spark-viewer-extract
             </a>
